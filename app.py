@@ -8,7 +8,7 @@ app = Flask(__name__)
 shortener = URLShortener()
 
 def sanitize_url(url):
-    forbidden_chars = ['@', '?', '{', '}', "\\", '|', ' ']
+    forbidden_chars = ['@', '?', '{', '}', "\\", '|', ';', ' ']
     for char in forbidden_chars:
         if char in url:
             return None, f"URL cannot contain '{char}'"
