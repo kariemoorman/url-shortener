@@ -1,5 +1,5 @@
 
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, abort
 from shorten_url import URLShortener
 
 
@@ -37,10 +37,17 @@ def index():
 def redirect_to_original_url(short_code):
     original_url = shortener.get_original_url(short_code)
     if original_url:
-        print(original_url)
-        return redirect(original_url)
+        redirect_url = request.args.get('redirect_url')
+        allowlist = [original_url]
+        if redirect_url in allowlist:
+            return redirect(original_url)
     else:
-        return "URL not found", 404
+        abort(404)
+        
+@app.errorhandler(404)
+def page_not_found(error):
+    return render_template('404.html'), 404
+
 
 if __name__ == '__main__':
     app.run(debug=True)
