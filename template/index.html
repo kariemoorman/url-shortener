@@ -13,6 +13,12 @@
             <input type="text" name="url" placeholder="Enter URL (e.g., www.example.com)">
             <button type="submit">Shorten</button>
         </form>
+
+        {% if error_message %}
+        <div class="container-b">
+        <p>Error: {{ error_message }}</p>
+        </div>
+        {% endif %}
         
         {% if original_url and short_url %}
         <div class="container-b">
